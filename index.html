@@ -7,8 +7,8 @@
     <style>
         body { 
             font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; 
-            /* 背景照片 */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), 
+            /* 1. 降低背景遮罩的濃度 (從 0.4 降到 0.2)，讓照片更亮更清楚 */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), 
                               url('https://github.com/eric8000lee/wedding/blob/main/background.jpg?raw=true');
             background-size: cover;
             background-position: center;
@@ -21,17 +21,19 @@
             padding: 20px; 
             box-sizing: border-box;
         }
-
+        
         .card { 
-            background: rgba(255, 255, 255, 0.85); 
-            padding: 50px 30px; 
+            /* 2. 讓卡片更透明 (0.85 -> 0.6)，這樣背景照片會隱約穿透出來 */
+            background: rgba(255, 255, 255, 0.6); 
+            padding: 30px 20px; 
             border-radius: 30px; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
             width: 100%; 
-            max-width: 400px; 
+            max-width: 360px; /* 3. 稍微縮窄卡片，讓背景露出的面積變大 */
             text-align: center; 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            /* 4. 降低模糊度 (8px -> 4px)，讓後面的照片細節清楚一點 */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
 
         h1 { color: #8b5e3c; font-size: 26px; margin-bottom: 8px; letter-spacing: 1px; }
