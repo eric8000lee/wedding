@@ -12,7 +12,7 @@
                               url('https://github.com/eric8000lee/wedding/blob/main/background.jpg?raw=true');
             background-size: cover;
             /* 2. 靠頂端對齊，避免人臉被卡片完全擋住 */
-            background-position: center top; 
+            background-position: center; 
             background-attachment: fixed;
             display: flex; 
             justify-content: center; 
@@ -23,21 +23,21 @@
             box-sizing: border-box;
         }
 
-        .card {
-            /* 3. 提高透明度到 0.45，呈現輕盈的毛玻璃感 */
-            background: rgba(255, 255, 255, 0.85);
-            padding: 40px 20px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 340px;
-            text-align: center;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            /* 4. 讓卡片往下一點，露出照片上方的臉 */
-            margin-top: 100px;
+        .card { 
+            /* 回復到你之前最滿意的 0.85 透明度，確保背景隱約可見但字體超清晰 */
+            background: rgba(255, 255, 255, 0.85); 
+            padding: 35px 20px; 
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            width: 100%; 
+            max-width: 360px; 
+            text-align: center; 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* 如果想避開人臉，可以微調這個數值 */
+            margin-top: 40px; 
         }
-        
+
         h1 { color: #8b5e3c; font-size: 26px; margin-bottom: 8px; letter-spacing: 1px; }
         p { color: #a68b7c; margin-bottom: 35px; font-size: 16px; }
 
