@@ -7,11 +7,12 @@
     <style>
         body { 
             font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; 
-            /* 1. 降低背景遮罩的濃度 (從 0.4 降到 0.2)，讓照片更亮更清楚 */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), 
+            /* 1. 降低遮罩濃度至 0.1，讓照片更鮮豔 */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), 
                               url('https://github.com/eric8000lee/wedding/blob/main/background.jpg?raw=true');
             background-size: cover;
-            background-position: center;
+            /* 2. 靠頂端對齊，避免人臉被卡片完全擋住 */
+            background-position: center top; 
             background-attachment: fixed;
             display: flex; 
             justify-content: center; 
@@ -21,19 +22,20 @@
             padding: 20px; 
             box-sizing: border-box;
         }
-        
+
         .card { 
-            /* 2. 讓卡片更透明 (0.85 -> 0.6)，這樣背景照片會隱約穿透出來 */
-            background: rgba(255, 255, 255, 0.6); 
-            padding: 30px 20px; 
+            /* 3. 提高透明度到 0.45，呈現輕盈的毛玻璃感 */
+            background: rgba(255, 255, 255, 0.45); 
+            padding: 40px 20px; 
             border-radius: 30px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05); 
             width: 100%; 
-            max-width: 360px; /* 3. 稍微縮窄卡片，讓背景露出的面積變大 */
+            max-width: 340px; 
             text-align: center; 
-            /* 4. 降低模糊度 (8px -> 4px)，讓後面的照片細節清楚一點 */
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            /* 4. 讓卡片往下一點，露出照片上方的臉 */
+            margin-top: 100px; 
         }
 
         h1 { color: #8b5e3c; font-size: 26px; margin-bottom: 8px; letter-spacing: 1px; }
@@ -48,11 +50,8 @@
             margin-bottom: 20px; 
             outline: none; 
             box-sizing: border-box; 
-            transition: 0.3s;
             text-align: center;
         }
-
-        input:focus { border-color: #c9a48c; background: white; }
 
         button { 
             background-color: #c9a48c; 
@@ -64,41 +63,11 @@
             cursor: pointer; 
             width: 100%; 
             font-weight: bold; 
-            transition: 0.3s;
             box-shadow: 0 4px 15px rgba(201, 164, 140, 0.3);
         }
 
-        button:active { transform: scale(0.98); }
-
-        #result { 
-            margin-top: 35px; 
-            min-height: 100px; 
-            color: #5d4037; 
-            font-size: 18px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .table-num { 
-            font-size: 60px; 
-            color: #c9a48c; 
-            font-weight: bold; 
-            margin-top: 10px; 
-            display: block; 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
-        }
-
-        /* 桌次平面圖樣式 */
-        .table-map {
-            width: 100%;
-            margin-top: 25px;
-            border-radius: 20px; /* 圓弧處理 */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-        }
-
+        #result { margin-top: 35px; min-height: 100px; color: #5d4037; font-size: 18px; }
+        .table-num { font-size: 60px; color: #c9a48c; font-weight: bold; margin-top: 10px; display: block; }
         .error-msg { color: #d9534f; font-size: 16px; }
         .loading { color: #a68b7c; font-style: italic; }
     </style>
@@ -114,7 +83,6 @@
 
     <script>
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxB5HoaTu7L_QLl9GGeprR3mzz5zv-tfmxYnmkUS_Ctg7s7lAY_DtBj5BH95SR6e2Hv/exec';
-        // 你的桌次圖網址
         const TABLE_MAP_URL = 'https://github.com/eric8000lee/wedding/blob/main/table.png?raw=true';
 
         async function search() {
@@ -134,11 +102,12 @@
                 const data = await response.json();
 
                 if (data.table) {
+                    // ✅ 修復處：將 currentMap 改為 TABLE_MAP_URL
                     resultDiv.innerHTML = `
-                        <div>🌟 ${name} 您好！您的席位在</div>
+                        <div style="margin-bottom:10px;">🌟 ${name} 您好！您的席位在</div>
                         <span class="table-num">${data.table}</span>
-                        <div style="margin-top:20px; font-size:14px; color:#a68b7c; font-weight:bold;">⬇️ 座位圖標示如下 ⬇️</div>
-                        <img src="${currentMap}" style="width:100%; border-radius:15px; margin-top:10px; border: 1px solid #e0d5cf;">
+                        <div style="margin-top:25px; font-size:14px; color:#a68b7c; font-weight:bold;">⬇️ 會場桌次配置圖 ⬇️</div>
+                        <img src="${TABLE_MAP_URL}" style="width:100%; border-radius:15px; margin-top:10px; border: 1px solid #e0d5cf; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
                     `;
                 } else {
                     resultDiv.innerHTML = `
