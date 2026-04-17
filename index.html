@@ -7,7 +7,7 @@
     <style>
         body { 
             font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; 
-            /* ⚠️ 替換區：請把下方的網址換成你照片的 raw 連結 */
+            /* 背景照片 */
             background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), 
                               url('https://github.com/eric8000lee/wedding/blob/main/background.jpg?raw=true');
             background-size: cover;
@@ -88,6 +88,15 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
+        /* 桌次平面圖樣式 */
+        .table-map {
+            width: 100%;
+            margin-top: 25px;
+            border-radius: 20px; /* 圓弧處理 */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+        }
+
         .error-msg { color: #d9534f; font-size: 16px; }
         .loading { color: #a68b7c; font-style: italic; }
     </style>
@@ -102,13 +111,14 @@
     </div>
 
     <script>
-        // ⚠️ 替換區：請把下方的網址換成你 Google Apps Script 的 /exec 網址
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxB5HoaTu7L_QLl9GGeprR3mzz5zv-tfmxYnmkUS_Ctg7s7lAY_DtBj5BH95SR6e2Hv/exec';
+        // 你的桌次圖網址
+        const TABLE_MAP_URL = 'https://github.com/eric8000lee/wedding/blob/main/table.png?raw=true';
 
         async function search() {
             const nameInput = document.getElementById('nameInput');
             const resultDiv = document.getElementById('result');
-            const name = nameInput.value.trim(); // .trim() 會自動刪掉前後多餘的空格
+            const name = nameInput.value.trim();
             
             if (!name) {
                 alert("請輸入姓名後再查詢喔！");
@@ -118,7 +128,6 @@
             resultDiv.innerHTML = '<div class="loading">正在為您確認席位...</div>';
             
             try {
-                // 發送請求到 Google
                 const response = await fetch(`${GOOGLE_SCRIPT_URL}?name=${encodeURIComponent(name)}`);
                 const data = await response.json();
 
@@ -126,6 +135,8 @@
                     resultDiv.innerHTML = `
                         <div>${name} 您好，您的席位在</div>
                         <span class="table-num">${data.table}</span>
+                        <div style="font-size: 14px; color: #a68b7c; margin-top: 15px;">⬇️ 會場桌次配置圖 ⬇️</div>
+                        <img src="${TABLE_MAP_URL}" class="table-map" alt="桌次圖">
                     `;
                 } else {
                     resultDiv.innerHTML = `
