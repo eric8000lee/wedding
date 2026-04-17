@@ -135,10 +135,10 @@
 
                 if (data.table) {
                     resultDiv.innerHTML = `
-                        <div>${name} 您好，您的席位在</div>
+                        <div>🌟 ${name} 您好！您的席位在</div>
                         <span class="table-num">${data.table}</span>
-                        <div style="font-size: 14px; color: #a68b7c; margin-top: 15px;">⬇️ 會場桌次配置圖 ⬇️</div>
-                        <img src="${TABLE_MAP_URL}" class="table-map" alt="桌次圖">
+                        <div style="margin-top:20px; font-size:14px; color:#a68b7c; font-weight:bold;">⬇️ 座位圖標示如下 ⬇️</div>
+                        <img src="${currentMap}" style="width:100%; border-radius:15px; margin-top:10px; border: 1px solid #e0d5cf;">
                     `;
                 } else {
                     resultDiv.innerHTML = `
